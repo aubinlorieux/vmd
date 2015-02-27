@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {},
   "bin": {
-    "vmd": "./cli.js"
+    "vmd": "./bin/vmd.js"
   },
   "repository": "yoshuawuyts/vmd",
   "keywords": [
@@ -22,7 +22,8 @@
     "github-markdown-css": "^2.0.3",
     "highlight.js": "^8.4.0",
     "marked": "^0.3.3",
-    "commander": "^2.6.0"
+    "commander": "^2.6.0",
+    "lodash": "^3.3.1"
   },
   "devDependencies": {}
 }

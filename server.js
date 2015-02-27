@@ -13,6 +13,9 @@ const mainWindow = null
 const filePath = process.argv[2]
 assert(filePath, 'no file path specified')
 
+const stylePath = process.argv[3]
+const highlightPath = process.argv[4]
+
 global.baseUrl = path.relative(__dirname, path.resolve(path.dirname(filePath)));
 if (global.baseUrl) { global.baseUrl += '/'; }
 
@@ -43,6 +46,6 @@ app.on('ready', function () {
 
   function sendMarkdown () {
       var file = fs.readFileSync(filePath, { encoding: 'utf8' })
-      window.webContents.send('md', file)
+      window.webContents.send('md', file, stylePath, highlightPath)
   }
 })

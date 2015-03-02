@@ -14,7 +14,7 @@ program
 
 //
 // Normalize version argument, i.e
-// 
+//
 // $ vmd -v
 // $ vmd -V
 // $ vmd --version

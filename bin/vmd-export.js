@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
 module.exports = function() {
-
-    console.log('no implemented yet !')
-
+  console.log('no implemented yet !');
 };

@@ -1,51 +1,58 @@
-const BrowserWindow = require('browser-window')
-const assert = require('assert')
-const app = require('app')
-const ipc = require('ipc')
-const fs = require('fs')
-const path = require('path')
-const chokidar = require('chokidar')
+/**
+ * Module dependencies
+ */
+const BrowserWindow = require('browser-window');
+const assert = require('assert');
+const app = require('app');
+const fs = require('fs');
+const path = require('path');
+const chokidar = require('chokidar');
 
-require('crash-reporter').start()
+/**
+ * Module Variable
+ * @private
+ */
+const join = path.join;
 
-const mainWindow = null
+require('crash-reporter').start();
 
-const filePath = process.argv[2]
-assert(filePath, 'no file path specified')
+const filePath = process.argv[2];
+const stylePath = process.argv[3];
+const highlightPath = process.argv[4];
 
-const stylePath = process.argv[3]
-const highlightPath = process.argv[4]
+assert(filePath, 'no file path specified');
 
 global.baseUrl = path.relative(__dirname, path.resolve(path.dirname(filePath)));
 if (global.baseUrl) { global.baseUrl += '/'; }
 
 const watcher = chokidar.watch(filePath, {
   usePolling: true
-})
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
-})
+  if (process.platform !== 'darwin') app.quit();
+});
 
 app.on('ready', function () {
-  window = new BrowserWindow({
+  var win = new BrowserWindow({
     title: path.basename(filePath) + ' - vmd',
-    icon: path.join(__dirname, 'resources/vmd.png'),
+    icon: join(__dirname, 'resources/vmd.png'),
     width: 800,
     height: 600
-  })
+  });
 
-  window.loadUrl('file://' + __dirname + '/index.html')
-  window.webContents.on('did-finish-load', sendMarkdown)
-  window.on('closed', function () {
-    mainWindow = null
-  })
+  win.loadUrl(join('file://', __dirname, '/index.html'));
+  win.webContents.on('did-finish-load', sendMarkdown);
+  win.on('closed', function () {
+    win = null;
+  });
 
-  watcher.on('change', sendMarkdown)
+  watcher.on('change', sendMarkdown);
 
   function sendMarkdown () {
-      var file = fs.readFileSync(filePath, { encoding: 'utf8' })
-      window.webContents.send('md', file, stylePath, highlightPath)
+      var file = fs.readFileSync(filePath, { encoding: 'utf8' });
+      win.webContents.send('md', file, stylePath, highlightPath);
   }
-})
+
+});

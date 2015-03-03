@@ -42,7 +42,7 @@ app.on('ready', function () {
     height: 600
   });
 
-  win.loadUrl(join('file://', __dirname, '/index.html'));
+  win.loadUrl(join('file://', __dirname, '/index.html'))
   win.webContents.on('did-finish-load', sendMarkdown)
   win.on('closed', function () {
     win = null

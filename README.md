@@ -14,8 +14,8 @@ $ npm install -g vmd
 
 ## Usage
 ```sh
-$ vmd show README.md
-$ vmd show README.md -s path/to/styles.css -h path/to/highlight.css
+$ vmd README.md
+$ vmd README.md -s path/to/styles.css -h path/to/highlight.css
 ```
 
 ## License
